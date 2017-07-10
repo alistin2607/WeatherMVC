@@ -16,5 +16,6 @@ namespace weather.Models
         public string ResCityName { get; set; }      //название города для отправки
         public bool last { get; set; } = false;         
         public List<string> Cookie { get; set; } = new List<string>();  //прошлые города
+        public List<SelectList> countries { get; set; } = new List<SelectList>();
     }
 }

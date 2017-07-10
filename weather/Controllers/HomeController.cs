@@ -7,6 +7,9 @@ using weather.Models;
 using System.Threading.Tasks;
 using weather.Controllers.JsonModels;
 using weather.Controllers;
+using System.Xml.Linq;
+using System.IO;
+
 
 
 namespace weather.Controllers
@@ -20,6 +23,7 @@ namespace weather.Controllers
        {
             var model = new Index();
             cookieswork(model);
+            ViewBag.space = " ";
             return View(model);
         }
         [HttpPost]
@@ -34,10 +38,14 @@ namespace weather.Controllers
                 //получаем объект класса с погодой 1
                 weather1 = get.getWeatherOWM(model.ResCityName);
                 //получаем объект класса с погодой 1
-                weather2 = get.getWeatherWU(model.ResCityName.Replace(" ", "_"));
+                if (weather1.sys != null)
+                { 
+                weather2 = get.getWeatherWU(model.ResCityName.Replace(" ", "_"), weather1.sys.country);
+                }
                 ViewGen(weather1, weather2);
                 //обрабатываем куки
                 cookieswork(model, model.ResCityName);
+                ViewBag.space = " ";
                 return View("ShowWeather", model);
             }
             else
@@ -47,8 +55,9 @@ namespace weather.Controllers
         }
 
         //смотрим погоду по ранее просмотренному городу
-        public ViewResult last(Index model, string city)
+        public ViewResult last(string city)
         {
+            Index model = new Models.Index();
             model.ResCityName = city;
             model.last = true;
             getweather get = new getweather();
@@ -57,11 +66,15 @@ namespace weather.Controllers
             //получаем объект класса с погодой 1
             weather1 = get.getWeatherOWM(model.ResCityName);
             //получаем объект класса с погодой 1
-            weather2 = get.getWeatherWU(model.ResCityName.Replace(" ", "_"));
+            if (weather1.sys != null)
+            {
+                weather2 = get.getWeatherWU(model.ResCityName.Replace(" ", "_"), weather1.sys.country);
+            }
             ViewGen(weather1, weather2);
 
             //обрабатываем куки
             cookieswork(model, model.ResCityName);
+            ViewBag.space = " ";
             return View("ShowWeather", model);
         }
 
@@ -106,7 +119,7 @@ namespace weather.Controllers
                     ViewBag.temp2 = WU.current_observation.temp_c + "°C";
                     ViewBag.cloud2 = "Weather: " + WU.current_observation.weather;
                     ViewBag.wind2 = "Wind: " + WU.current_observation.wind_kph + "m/sec, " + WU.current_observation.wind_degrees + " deg";
-                    ViewBag.humb2 = "Humibity: " + WU.current_observation.relative_humidity + "%";
+                    ViewBag.humb2 = "Humibity: " + WU.current_observation.relative_humidity;
                     ViewBag.pres2 = "Pressure: " + WU.current_observation.pressure_mb + "hpa";
 
                 }
@@ -134,10 +147,10 @@ namespace weather.Controllers
                 char d = ',';
                 String[] substrings = cookie.Split(d);
                 
-                for (int i = 0; i < substrings.Length; i++)
-                {
-                    model.Cookie.Add(substrings[i]);
-                }
+                //for (int i = 0; i < substrings.Length; i++)
+                //{
+                //    model.Cookie.Add(substrings[i]);
+                //}
             }
         }
 

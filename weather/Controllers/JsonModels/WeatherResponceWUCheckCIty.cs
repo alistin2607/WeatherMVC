@@ -17,6 +17,7 @@ namespace weather.Controllers.JsonModels
     {
         public string city { get; set; }
         public string zmw { get; set; }
+        public string country_iso3166 { get; set; }
     }
 
 }

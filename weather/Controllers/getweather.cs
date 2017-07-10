@@ -37,10 +37,10 @@ namespace weather.Controllers
 
                 WR = JsonConvert.DeserializeObject<WeatherResponceOWM>(response);
 
-                if (WR.name.ToLower() != city.ToLower())
-                {
-                    WR.name = "Not found";
-                }
+                //if (WR.name.ToLower() != city.ToLower())
+                //{
+                //    WR.name = "Not found";
+                //}
                 return WR;
             }
             catch (WebException ex)
@@ -67,15 +67,16 @@ namespace weather.Controllers
             }
         }
 
-        //get forecast from WU service, get forecast
-        public WeatherResponceWU getWeatherWU(string city)
+        //Берем погоду с WU с учетом страны
+        public WeatherResponceWU getWeatherWU(string city, string testcountry)
         {
             string url;
             var model = new Index();
 
             url = "http://api.wunderground.com/api/c4bb30b97572d3ed/conditions/q/CA/" + city + ".json";
+            
             HttpWebRequest httpWebRequest = (HttpWebRequest)WebRequest.Create(url);
-
+            
             try
             {
                 //сначала проверяем, вернется нам список городов или сразу прогноз. 
@@ -91,8 +92,20 @@ namespace weather.Controllers
 
                 if (WRCC.response.results != null)
                 {
+                    string strcode = WRCC.response.results[0].zmw;
                     //если список городов, берем из него первую ссылку и по ней тянем сам прогноз
-                    url = "http://api.wunderground.com/api/c4bb30b97572d3ed/conditions/q/CA/zmw:" + WRCC.response.results[0].zmw + ".json";
+                    if (testcountry != null)
+                    {
+                        for (int i = 0; i < WRCC.response.results.Length; i++)
+                        {
+                            if (WRCC.response.results[i].country_iso3166 == testcountry)
+                            {
+                                strcode = WRCC.response.results[i].zmw;
+                                break;
+                            }
+                        }
+                    } 
+                    url = "http://api.wunderground.com/api/c4bb30b97572d3ed/conditions/q/CA/zmw:" + strcode + ".json";
                     
                     try
                     {
