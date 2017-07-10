@@ -1,0 +1,116 @@
+﻿@model weather.Models.Index
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>ShowWeather</title>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Alegreya|Bree+Serif" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="~/Content/Styles.css" />
+    <style>
+       .page-header {
+            padding-bottom: 5px;
+            margin: 10px 0 20px;
+            border-bottom: 3px solid #eee;
+            font-family: 'Bree Serif', serif;
+            color: #00BFFF;
+            font-size: 40px;
+        }
+
+        body {
+            background-color: #F1F1F1;
+            font-family: 'Alegreya', serif;
+            font-size: 15px;
+        }
+
+        .col-sm-4 {
+            margin: 2px 0 2px;
+        }
+        .page-footer {
+            padding-bottom: 5px;
+            margin: 10px 0 10px;
+            border-top: 3px solid #eee;
+            font-family: 'Alegreya', serif;
+            font-size: 15px;
+        }
+    </style>
+
+</head>
+<body>
+    <div class="text-center">
+        <div class="page-header">
+            Wheather
+        </div>
+        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+        {
+        <div class="row">
+            <div class="col-sm-4"> </div>
+            <div class="col-sm-4">
+                @Html.TextBoxFor(x => x.ResCityName, new { @class = "form-control" })
+                @if (Model.last == false)
+                {
+                @Html.ValidationSummary()
+                }
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+        <div class="row">
+            <div class="col-sm-4"> </div>
+            <div class="col-sm-4">
+                <button name="getforecast" type="submit" value="Get forecast" class="btn btn-success">Get forecast</button>
+              
+            </div>
+            <div class="col-sm-4"></div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-3"> </div>
+            <div class="col-sm-3">
+                <p class="text-left">@ViewBag.Portal1</p>
+                <p class="text-left">@ViewBag.Name1</p>
+                <h3>@ViewBag.temp1</h3>
+                <p> @ViewBag.cloud1</p>
+                <p> @ViewBag.wind1</p>
+                <p> @ViewBag.humb1</p>
+                <p> @ViewBag.pres1</p>
+               
+            </div>
+            <div class="col-sm-3">
+                <p class="text-left">@ViewBag.Portal2</p>
+                <p class="text-left">@ViewBag.Name2</p>
+                <h3>@ViewBag.temp2</h3>
+                <p> @ViewBag.cloud2</p>
+                <p> @ViewBag.wind2</p>
+                <p> @ViewBag.humb2</p>
+                <p> @ViewBag.pres2</p>
+
+            </div>
+            <div class="col-sm-3"></div>
+        </div>
+        }
+        <div class="page-footer">
+           @using (Html.BeginForm("last", "Home", FormMethod.Post))
+           { 
+            @helper LastCity(List<string> cities)
+            {
+                    foreach (string s in cities)
+                    {
+                        <input type="hidden" name="city" value="@s">
+                        <button name="getforecast" type="submit" value="ss" class=".text-primary">@s</button>
+                    }
+            }
+            @LastCity(Model.Cookie)
+            }
+        </div>
+    </div>
+       
+
+</body>
+</html>
