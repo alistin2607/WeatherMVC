@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.15
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29911.84
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "weather", "weather\weather.csproj", "{EB7340B0-C6A7-4E92-A420-7DA60E8A389E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Weather", "weather\Weather.csproj", "{EB7340B0-C6A7-4E92-A420-7DA60E8A389E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -18,5 +18,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5E60BB81-E87D-45E8-B4CC-46AE908EA29E}
 	EndGlobalSection
 EndGlobal

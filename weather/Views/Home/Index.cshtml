@@ -1,4 +1,4 @@
-﻿@model weather.Models.Index
+﻿@model Weather.Models.Index
 
 @{
     Layout = null;
@@ -12,6 +12,7 @@
     <title>Index</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Alegreya|Bree+Serif" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Bellefair|Permanent+Marker|Spectral" rel="stylesheet">
     <script src='@Url.Content("~/Scripts/jquery-ui-1.11.3.min.js")' type="text/javascript"></script>
@@ -21,16 +22,21 @@
             padding-bottom: 5px;
             margin: 10px 0 20px;
             border-bottom: 3px solid #eee;
-            font-family: 'Permanent Marker', cursive;
+            font-family: 'Baloo Tamma 2';
+            font-weight:700;
             font-size: 40px;
         }
+
         body {
             background-color: #F1F1F1;
-            font-family: 'Spectral', serif;
+            font-family: 'Baloo Tamma 2';
+            font-weight: 400;
         }
+
         .col-sm-4 {
             margin: 2px 0 2px;
         }
+
         .page-footer {
             padding-bottom: 5px;
             margin: 10px 0 10px;
@@ -41,45 +47,45 @@
     </style>
 </head>
 <body>
-    <div class="text-center">
-        <div class="page-header">
-            Wheather
-        </div>
-        @using (Html.BeginForm("Index", "Home", FormMethod.Post))
-        {
-                <div class="row">
-                    <div class="col-sm-4"> </div>
-                    <div class="col-sm-4">
-                      
-                         @Html.TextBoxFor(x => x.ResCityName, new { @class = "form-control" })
-                        @*<input type="text" name="city" /><br />*@
-                    </div>
-                    <div class="col-sm-4"> </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4"> </div>
-                    <div class="col-sm-4">
-                        <button name="getforecast" type="submit" value="Get forecast" class="btn btn-success" aria-label="Left Align">Get forecast</button>
-                    </div>
-                    <div class="col-sm-4"></div>
-                </div>
-              
-        }
-        <div class="page-footer">
-            @using (Html.BeginForm("last", "Home", FormMethod.Post))
+    <div class="container">
+        <div class="text-center">
+            <div class="page-header">
+                Weather
+            </div>
+            @using (Html.BeginForm("Index", "Home", FormMethod.Post))
             {
-                @helper LastCity(List<string> cities)
-                {
-                    foreach (string s in cities)
-                        { 
-                            @Html.ActionLink( s, "last", "Home", new { city = s }, null)
-                        }
-                }
-                @LastCity(Model.Cookie)
+                    <div class="row">
+                        <div class="col-sm-4"> </div>
+                        <div class="col-sm-4">
+                             @Html.TextBoxFor(x => x.ResCityName, new { @class = "form-control" })
+                        </div>
+                        <div class="col-sm-4"> </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4"> </div>
+                        <div class="col-sm-4">
+                            <button name="getforecast" type="submit" value="Get forecast" class="btn btn-success" aria-label="Left Align">Get forecast</button>
+                        </div>
+                        <div class="col-sm-4"></div>
+                    </div>         
             }
+            <div class="page-footer">
+                @using (Html.BeginForm("PreviousCity", "Home", FormMethod.Post))
+                {
+                    @helper LastCity(List<string> cities)
+                    {
+                        foreach (string s in cities)
+                            { 
+                                <div class="row">
+                                    @Html.ActionLink( s, "PreviousCity", "Home", new { city = s }, null)
+                                </div>
+                                
+                            }
+                    }
+                    @LastCity(Model.Cookie)
+                }
+            </div>
         </div>
-
-    </div>
-        
+     </div>
 </body>
 </html>

@@ -1,4 +1,4 @@
-﻿@model weather.Models.Index
+﻿@model Weather.Models.Index
 
 @{
     Layout = null;
@@ -9,28 +9,31 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width" />
-    <title>ShowWeather</title>
+    <title>Show Weather</title>
     <link href="~/Content/bootstrap.css" rel="stylesheet" />
     <link href="~/Content/bootstrap-theme.css" rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css?family=Alegreya|Bree+Serif" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Bellefair|Permanent+Marker|Spectral" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+Tamma+2:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="~/Content/Styles.css" />
     <style>
         .page-header {
             padding-bottom: 5px;
             margin: 10px 0 20px;
             border-bottom: 3px solid #eee;
-            font-family: 'Permanent Marker', cursive;
+            font-family: 'Baloo Tamma 2';
+            font-weight: 700;
             font-size: 40px;
         }
 
         body {
             background-color: #F1F1F1;
-            font-family: 'Spectral', serif;
+            font-family: 'Baloo Tamma 2';
+            font-weight: 400;
         }
+
         .col-sm-4 {
             margin: 2px 0 2px;
         }
+
         .page-footer {
             padding-bottom: 5px;
             margin: 10px 0 10px;
@@ -93,20 +96,21 @@
             <div class="col-sm-3"></div>
         </div>
         }
-        <div class="page-footer">
-           @using (Html.BeginForm("last", "Home", FormMethod.Post))
-           { 
+    <div class="container-fluid">
+        @using (Html.BeginForm("PreviousCity", "Home", FormMethod.Post))
+        {
             @helper LastCity(List<string> cities)
             {
-                    foreach (string s in cities)
-                    {
-                         @Html.ActionLink( s, "last", "Home", new { model = Model, city = s }, null)
-                         @Html.ViewBag.space
-                    }
+                foreach (string s in cities)
+                {
+                <div class="row">
+                    @Html.ActionLink(s, "PreviousCity", "Home", new { model = Model, city = s }, null)
+                </div>
+                }
             }
             @LastCity(Model.Cookie)
-            }
-        </div>
+        }
+    </div>
     </div>
        
 
